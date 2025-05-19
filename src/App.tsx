@@ -21,7 +21,6 @@ function App() {
     console.log("City name:", cityName);
   };
 
-
   return (
     <>
       <Typography
