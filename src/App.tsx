@@ -3,6 +3,7 @@ import { Box, Typography, TextField, Button } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import "./App.css";
 import axios from "axios";
+import WeatherDisplay from "./components/WeatherDisplay";
 
 
 function App() {
@@ -17,6 +18,7 @@ function App() {
       const response = await axios.get(
         `https://api.weatherapi.com/v1/current.json?key=${API_KEY}&q=${cityName}`
       );
+      setWeatherData(response.data);
     } catch (error) {
       console.error("Error fetching weather data:", error);
     }
@@ -99,7 +101,7 @@ function App() {
         />
 
         <Button
-          onClick={() => handleClick()}
+          onClick={() => handleClick(city)}
           sx={{
             bgcolor: "#374151",
             color: "#fff",
@@ -116,6 +118,7 @@ function App() {
           <SearchIcon />
         </Button>
       </Box>
+      <WeatherDisplay weatherData={weatherData} />
     </>
   );
 }
