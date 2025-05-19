@@ -1,35 +1,84 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState } from "react";
+import { Box, Typography, TextField, Button } from "@mui/material";
+import SearchIcon from "@mui/icons-material/Search";
+import "./App.css";
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [city, setCity] = useState("");
+
+  const handleClick = async () => {};
 
   return (
     <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <Typography
+        variant="h3"
+        align="center"
+        gutterBottom
+        sx={{
+          fontWeight: "bold",
+          background: "linear-gradient(to right, #facc15, #f97316, #ec4899)",
+          WebkitBackgroundClip: "text",
+          WebkitTextFillColor: "transparent",
+          mb: 4,
+        }}
+      >
+        Weather App
+      </Typography>
+
+      <Box
+        sx={{
+          display: "flex",
+          alignItems: "stretch",
+          justifyContent: "center",
+          maxWidth: 600,
+          mx: "auto",
+        }}
+      >
+        <TextField
+          fullWidth
+          placeholder="Search for a city..."
+          value={city}
+          onChange={(e) => setCity(e.target.value)}
+          variant="outlined"
+          sx={{
+            input: { color: "#fff" },
+            bgcolor: "#374151",
+            "& fieldset": {
+              border: "none",
+            },
+            borderTopLeftRadius: 8,
+            borderBottomLeftRadius: 8,
+            borderTopRightRadius: 0,
+            borderBottomRightRadius: 0,
+          }}
+          InputProps={{
+            sx: {
+              bgcolor: "#374151",
+              color: "#fff",
+            },
+          }}
+        />
+
+        <Button
+          onClick={handleClick}
+          sx={{
+            bgcolor: "#374151",
+            color: "#fff",
+            borderTopRightRadius: 6,
+            borderBottomRightRadius: 6,
+            borderTopLeftRadius: 0,
+            borderBottomLeftRadius: 0,
+            px: 3,
+            "&:hover": {
+              bgcolor: "#1f2937",
+            },
+          }}
+        >
+          <SearchIcon />
+        </Button>
+      </Box>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
