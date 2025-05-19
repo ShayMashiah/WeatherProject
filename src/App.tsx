@@ -1,16 +1,18 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Box, Typography, TextField, Button } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import "./App.css";
 import axios from "axios";
 
+
 function App() {
   const [city, setCity] = useState("");
+  const [weatherData, setWeatherData] = useState<any>(null);
 
   const API_KEY = import.meta.env.VITE_WEATHER_API_KEY;
 
   const handleClick = async (cityName: string = city) => {
-        if (!city) return;
+    if (!city) return;
     try {
       const response = await axios.get(
         `https://api.weatherapi.com/v1/current.json?key=${API_KEY}&q=${cityName}`
@@ -21,6 +23,29 @@ function App() {
     console.log("City name:", cityName);
   };
 
+  useEffect(() => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        async (position) => {
+          const { latitude, longitude } = position.coords;
+          try {
+            const response = await axios.get(
+              `https://api.weatherapi.com/v1/current.json?key=${API_KEY}&q=${latitude},${longitude}`
+            );
+            setWeatherData(response.data);
+            console.log("Weather data:", response.data);
+          } catch (error) {
+            console.error("Failed to fetch weather by location", error);
+          }
+        },
+        (error) => {
+          console.error("Geolocation error:", error);
+        }
+      );
+    } else {
+      console.error("Geolocation is not supported by this browser.");
+    }
+  }, [API_KEY]);
 
   return (
     <>
