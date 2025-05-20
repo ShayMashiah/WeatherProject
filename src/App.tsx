@@ -14,9 +14,6 @@ function App() {
   const { data: locationWeather, isSuccess: isLocationSuccess } =
     useGeolocationWeather(API_KEY);
 
-  console.log(locationWeather);
-  console.log(isLocationSuccess);
-
   const { data: weatherData, refetch } = useQuery({
     queryKey: ["weather", city],
     queryFn: () => fetchWeather(city, API_KEY),

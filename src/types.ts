@@ -1,17 +1,5 @@
 export interface SearchWeatherInterface {
-  weatherData: {
-    location: {
-      name: string;
-      country: string;
-    };
-    current: {
-      temp_c: number;
-      condition: {
-        text: string;
-        icon: string;
-      };
-    };
-  } | null;
+weatherData: CurrentWeatherInterface | null;
 }
 
 export interface CurrentWeatherInterface {
