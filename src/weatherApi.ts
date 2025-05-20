@@ -1,4 +1,4 @@
- import axios from "axios";
+import axios from "axios";
 
 export const fetchWeather = async (cityName: string, API_KEY: string) => {
   const response = await axios.get(
@@ -21,3 +21,4 @@ export const fetchWeather = async (cityName: string, API_KEY: string) => {
       console.error("Error fetching weather data:", error);
     }
   };
+

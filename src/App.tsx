@@ -3,6 +3,17 @@ import { Box, Typography, TextField, Button } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import { useQuery } from "@tanstack/react-query";
 import { fetchWeather, fetchCurrentWeatherData } from "./weatherApi";
+import "./App.css";
+import { fetchWeather } from "./weatherApi";
+import { useQuery } from "@tanstack/react-query";
+import {
+  titleStyle,
+  boxWrapperStyle,
+  inputStyle,
+  inputPropsStyle,
+  buttonStyle,
+} from "./sytles";
+import { inputCityPlaceholder } from "./consts";
 
 function App() {
   const [city, setCity] = useState<string>("");
@@ -10,8 +21,6 @@ function App() {
 
   const {
     data: weatherData,
-    isLoading,
-    isError,
     refetch,
   } = useQuery({
     queryKey: ["weather", city],
@@ -54,70 +63,21 @@ function App() {
 
   return (
     <>
-      <Typography
-        variant="h3"
-        align="center"
-        gutterBottom
-        sx={{
-          fontWeight: "bold",
-          background: "linear-gradient(to right, #facc15, #f97316, #ec4899)",
-          WebkitBackgroundClip: "text",
-          WebkitTextFillColor: "transparent",
-          mb: 4,
-        }}
-      >
+      <Typography variant="h3" align="center" gutterBottom sx={titleStyle}>
         Weather App
       </Typography>
 
-      <Box
-        sx={{
-          display: "flex",
-          alignItems: "stretch",
-          justifyContent: "center",
-          maxWidth: 600,
-          mx: "auto",
-        }}
-      >
+      <Box sx={boxWrapperStyle}>
         <TextField
           fullWidth
-          placeholder="Search for a city..."
+          placeholder={inputCityPlaceholder}
           value={city}
           onChange={(e) => setCity(e.target.value)}
           variant="outlined"
-          sx={{
-            input: { color: "#fff" },
-            bgcolor: "#374151",
-            "& fieldset": {
-              border: "none",
-            },
-            borderTopLeftRadius: 8,
-            borderBottomLeftRadius: 8,
-            borderTopRightRadius: 0,
-            borderBottomRightRadius: 0,
-          }}
-          InputProps={{
-            sx: {
-              bgcolor: "#374151",
-              color: "#fff",
-            },
-          }}
+          sx={inputStyle}
+          InputProps={{ sx: inputPropsStyle }}
         />
-
-        <Button
-          onClick={() => handleClick()}
-          sx={{
-            bgcolor: "#374151",
-            color: "#fff",
-            borderTopRightRadius: 6,
-            borderBottomRightRadius: 6,
-            borderTopLeftRadius: 0,
-            borderBottomLeftRadius: 0,
-            px: 3,
-            "&:hover": {
-              bgcolor: "#1f2937",
-            },
-          }}
-        >
+        <Button onClick={handleClick} sx={buttonStyle}>
           <SearchIcon />
         </Button>
       </Box>
