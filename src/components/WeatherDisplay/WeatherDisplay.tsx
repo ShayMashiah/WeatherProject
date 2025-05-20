@@ -1,8 +1,21 @@
 import React from "react";
 import { Box, Paper, Typography } from "@mui/material";
+import { displayBoxStyle, iconBoxStyle } from "./styles";
 
 interface WeatherDisplayProps {
-  weatherData: any;
+  weatherData: {
+    location: {
+      name: string;
+      country: string;
+    };
+    current: {
+      temp_c: number;
+      condition: {
+        text: string;
+        icon: string;
+      };
+    };
+  } | null;
 }
 
 const WeatherDisplay: React.FC<WeatherDisplayProps> = ({ weatherData }) => {
@@ -12,16 +25,7 @@ const WeatherDisplay: React.FC<WeatherDisplayProps> = ({ weatherData }) => {
     <Box display="flex" justifyContent="center" mt={6}>
       <Paper
         elevation={3}
-        sx={{
-          textAlign: "center",
-          p: 4,
-          maxWidth: 400,
-          width: "100%",
-          borderRadius: 2,
-          bgcolor: "#374151",
-          backdropFilter: "blur(12px)",
-          color: "#fff",
-        }}
+        sx={displayBoxStyle}
       >
         <Typography variant="h5" fontWeight="600" gutterBottom>
           {weatherData.location.name}, {weatherData.location.country}
@@ -39,7 +43,7 @@ const WeatherDisplay: React.FC<WeatherDisplayProps> = ({ weatherData }) => {
           component="img"
           src={`https:${weatherData.current.condition.icon}`}
           alt={weatherData.current.condition.text}
-          sx={{ mx: "auto" }}
+          sx={iconBoxStyle}
         />
       </Paper>
     </Box>
