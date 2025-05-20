@@ -1,5 +1,8 @@
-export interface GeolocationWeather {
-  weatherData: {
+export interface SearchWeatherInterface {
+weatherData: CurrentWeatherInterface | null;
+}
+
+export interface CurrentWeatherInterface {
     location: {
       name: string;
       country: string;
@@ -11,5 +14,15 @@ export interface GeolocationWeather {
         icon: string;
       };
     };
-  } | null;
+}
+
+export interface HistoryButtonProps {
+  history: string[];
+  onSelect: (city: string) => void;
+}
+
+export interface SearchBarProps {
+  city: string;
+  onCityChange: (value: string) => void;
+  onSearchClick: () => void;
 }

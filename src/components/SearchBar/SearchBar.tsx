@@ -8,12 +8,7 @@ import {
   buttonStyle,
 } from "./styles";
 import { inputCityPlaceholder } from "../../consts";
-
-interface SearchBarProps {
-  city: string;
-  onCityChange: (value: string) => void;
-  onSearchClick: () => void;
-}
+import type { SearchBarProps } from "../../types";
 
 const SearchBar: React.FC<SearchBarProps> = ({ city, onCityChange, onSearchClick }) => {
   return (
