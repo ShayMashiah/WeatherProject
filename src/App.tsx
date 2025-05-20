@@ -11,10 +11,8 @@ function App() {
   const [city, setCity] = useState<string>("");
   const API_KEY = import.meta.env.VITE_WEATHER_API_KEY;
 
-  const {
-    data: locationWeather,
-    isSuccess: isLocationSuccess,
-  } = useGeolocationWeather(API_KEY);
+  const { data: locationWeather, isSuccess: isLocationSuccess } =
+    useGeolocationWeather(API_KEY);
 
   const { data: weatherData, refetch } = useQuery({
     queryKey: ["weather", city],
@@ -28,10 +26,12 @@ function App() {
     }
   };
 
-   useEffect(() => {
-    if (isLocationSuccess && locationWeather?.location?.name) {
-      setCity(locationWeather.location.name);
-      setTimeout(() => {refetch();}, 100);
+  useEffect(() => {
+    if (isLocationSuccess && locationWeather?.weatherData?.location?.name) {
+      setCity(locationWeather.weatherData.location.name);
+      setTimeout(() => {
+        refetch();
+      }, 100);
     }
   }, [isLocationSuccess, locationWeather]);
 
