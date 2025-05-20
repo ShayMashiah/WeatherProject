@@ -16,7 +16,7 @@ export const fetchWeather = async (cityName: string, API_KEY: string) => {
       const response = await axios.get(
         `https://api.weatherapi.com/v1/current.json?key=${API_KEY}&q=${latitude},${longitude}`
       );
-      return response; 
+      return response.data; 
     } catch (error) {
       console.error("Error fetching weather data:", error);
     }
