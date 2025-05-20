@@ -1,26 +1,28 @@
 import { useState, useEffect } from "react";
 import { Box, Typography, TextField, Button } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
-import "./App.css";
-import axios from "axios";
-
+import { useQuery } from "@tanstack/react-query";
+import { fetchWeather, fetchCurrentWeatherData } from "./weatherApi";
 
 function App() {
-  const [city, setCity] = useState("");
-  const [weatherData, setWeatherData] = useState<any>(null);
-
+  const [city, setCity] = useState<string>("");
   const API_KEY = import.meta.env.VITE_WEATHER_API_KEY;
 
-  const handleClick = async (cityName: string = city) => {
-    if (!city) return;
-    try {
-      const response = await axios.get(
-        `https://api.weatherapi.com/v1/current.json?key=${API_KEY}&q=${cityName}`
-      );
-    } catch (error) {
-      console.error("Error fetching weather data:", error);
+  const {
+    data: weatherData,
+    isLoading,
+    isError,
+    refetch,
+  } = useQuery({
+    queryKey: ["weather", city],
+    queryFn: () => fetchWeather(city, API_KEY),
+    enabled: false,
+  });
+
+  const handleClick = () => {
+    if (city) {
+      refetch();
     }
-    console.log("City name:", cityName);
   };
 
   useEffect(() => {
@@ -29,11 +31,14 @@ function App() {
         async (position) => {
           const { latitude, longitude } = position.coords;
           try {
-            const response = await axios.get(
-              `https://api.weatherapi.com/v1/current.json?key=${API_KEY}&q=${latitude},${longitude}`
+            const response = await fetchCurrentWeatherData(
+              latitude,
+              longitude,
+              API_KEY
             );
-            setWeatherData(response.data);
-            console.log("Weather data:", response.data);
+            if (response) {
+              setCity(response.data.location.name);
+            } 
           } catch (error) {
             console.error("Failed to fetch weather by location", error);
           }
