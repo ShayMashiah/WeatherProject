@@ -1,22 +1,7 @@
 import React from "react";
 import { Box, Paper, Typography } from "@mui/material";
 import { displayBoxStyle, iconBoxStyle } from "./styles";
-
-interface WeatherDisplayProps {
-  weatherData: {
-    location: {
-      name: string;
-      country: string;
-    };
-    current: {
-      temp_c: number;
-      condition: {
-        text: string;
-        icon: string;
-      };
-    };
-  } | null;
-}
+import type { WeatherDisplayProps } from "../../types";
 
 const WeatherDisplay: React.FC<WeatherDisplayProps> = ({ weatherData }) => {
   if (!weatherData) return null;

@@ -1,19 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { fetchCurrentWeatherData } from "./weatherApi";
-
-interface GeolocationWeather {
-    location: {
-        name: string;
-        country: string;
-    };
-    current: {
-        temp_c: number;
-        condition: {
-            text: string;
-            icon: string;
-        };
-    };
-}
+import type { GeolocationWeather } from "./types";
 
 export const useGeolocationWeather = (API_KEY: string) => {
   return useQuery<GeolocationWeather>({

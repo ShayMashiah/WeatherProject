@@ -21,3 +21,4 @@ export const fetchWeather = async (cityName: string, API_KEY: string) => {
       console.error("Error fetching weather data:", error);
     }
   };
+
