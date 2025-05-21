@@ -41,6 +41,7 @@ function App() {
       setTimeout(() => {
         refetch();
       }, 100);
+
     }
   }, [isLocationSuccess, locationWeather]);
 
