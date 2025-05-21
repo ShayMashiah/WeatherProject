@@ -1,7 +1,11 @@
 import React from "react";
 import { Box, Paper, Typography } from "@mui/material";
 import { displayBoxStyle, iconBoxStyle } from "./styles";
-import type { SearchWeatherInterface } from "../../types";
+import type { CurrentWeatherInterface } from "../../types";
+
+export interface SearchWeatherInterface {
+weatherData: CurrentWeatherInterface | null;
+}
 
 const WeatherDisplay: React.FC<SearchWeatherInterface> = ({ weatherData }) => {
   if (!weatherData) return null;

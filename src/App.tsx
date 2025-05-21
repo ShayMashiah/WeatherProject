@@ -6,9 +6,12 @@ import { useGeolocationWeather } from "./useGeolocationWeather";
 import { titleStyle } from "./styles";
 import WeatherDisplay from "./components/WeatherDisplay/WeatherDisplay";
 import SearchBar from "./components/SearchBar/SearchBar";
+import HistoryButton from "./components/HistoryButton/HistoryButton";
 
 function App() {
   const [city, setCity] = useState<string>("");
+  const [history, setHistory] = useState<string[]>([]);
+
   const API_KEY = import.meta.env.VITE_WEATHER_API_KEY;
 
   const { data: locationWeather, isSuccess: isLocationSuccess } =
@@ -22,6 +25,12 @@ function App() {
 
   const handleClick = () => {
     if (city) {
+      setHistory((prevHistory) => {
+        if (!prevHistory.includes(city)) {
+          return [...prevHistory, city];
+        }
+        return prevHistory;
+      });
       refetch();
     }
   };
@@ -29,7 +38,10 @@ function App() {
   useEffect(() => {
     if (isLocationSuccess && locationWeather?.location.name) {
       setCity(locationWeather.location.name);
-      setTimeout(() => {refetch()}, 100);
+      setTimeout(() => {
+        refetch();
+      }, 100);
+
     }
   }, [isLocationSuccess, locationWeather]);
 
@@ -42,8 +54,18 @@ function App() {
       <SearchBar
         city={city}
         onCityChange={setCity}
-        onSearchClick={handleClick}
-      ></SearchBar>
+        onSearchClick={() => {
+          handleClick();
+        }}
+      />
+
+      <HistoryButton
+        history={history}
+        onSelect={(city) => {
+          setCity(city);
+          refetch();
+        }}
+      />
 
       <WeatherDisplay weatherData={weatherData} />
     </>

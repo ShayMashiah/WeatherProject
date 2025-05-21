@@ -11,7 +11,6 @@ export const useGeolocationWeather = (API_KEY: string) => {
           reject(new Error("Geolocation is not supported"));
           return;
         }
-
         navigator.geolocation.getCurrentPosition(
           async (position) => {
             const { latitude, longitude } = position.coords;

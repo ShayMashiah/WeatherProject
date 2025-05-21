@@ -1,6 +1,5 @@
 import type { SxProps, Theme } from "@mui/material";
 
-
 export const boxWrapperStyle: SxProps<Theme> = {
           display: "flex",
           justifyContent: "center",
@@ -35,5 +34,5 @@ export const buttonStyle: SxProps<Theme> = {
             px: 3,
             "&:hover": {
               bgcolor: "#1f2937",
-    },
-};
+        },
+    };

@@ -1,7 +1,3 @@
-export interface SearchWeatherInterface {
-weatherData: CurrentWeatherInterface | null;
-}
-
 export interface CurrentWeatherInterface {
     location: {
       name: string;
@@ -14,4 +10,9 @@ export interface CurrentWeatherInterface {
         icon: string;
       };
     };
+}
+
+export interface HistoryButtonProps {
+  history: string[];
+  onSelect: (city: string) => void;
 }
