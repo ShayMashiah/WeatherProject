@@ -1,7 +1,3 @@
-export interface SearchWeatherInterface {
-weatherData: CurrentWeatherInterface | null;
-}
-
 export interface CurrentWeatherInterface {
     location: {
       name: string;
@@ -19,10 +15,4 @@ export interface CurrentWeatherInterface {
 export interface HistoryButtonProps {
   history: string[];
   onSelect: (city: string) => void;
-}
-
-export interface SearchBarProps {
-  city: string;
-  onCityChange: (value: string) => void;
-  onSearchClick: () => void;
 }

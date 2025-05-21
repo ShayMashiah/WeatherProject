@@ -25,6 +25,12 @@ function App() {
 
   const handleClick = () => {
     if (city) {
+      setHistory((prevHistory) => {
+        if (!prevHistory.includes(city)) {
+          return [...prevHistory, city];
+        }
+        return prevHistory;
+      });
       refetch();
     }
   };
@@ -49,15 +55,9 @@ function App() {
         onCityChange={setCity}
         onSearchClick={() => {
           handleClick();
-          setHistory((prevHistory) => {
-            if (!prevHistory.includes(city)) {
-              return [...prevHistory, city];
-            }
-            return prevHistory;
-          });
         }}
       />
-      
+
       <HistoryButton
         history={history}
         onSelect={(city) => {
