@@ -1,9 +1,9 @@
 import { useQuery } from "@tanstack/react-query";
 import { fetchCurrentWeatherData } from "./weatherApi";
-import type { GeolocationWeather } from "./types";
+import type { CurrentWeatherInterface } from "./types";
 
 export const useGeolocationWeather = (API_KEY: string) => {
-  return useQuery<GeolocationWeather>({
+  return useQuery<CurrentWeatherInterface>({
     queryKey: ["geolocationWeather"],
     queryFn: async () => {
       return new Promise((resolve, reject) => {
@@ -16,8 +16,8 @@ export const useGeolocationWeather = (API_KEY: string) => {
           async (position) => {
             const { latitude, longitude } = position.coords;
             try {
-              const data = await fetchCurrentWeatherData(latitude, longitude, API_KEY);
-              resolve(data);
+              const response = await fetchCurrentWeatherData(latitude, longitude, API_KEY);
+              resolve(response);
             } catch (err) {
               reject(err);
             }

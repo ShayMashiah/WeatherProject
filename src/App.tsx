@@ -27,11 +27,9 @@ function App() {
   };
 
   useEffect(() => {
-    if (isLocationSuccess && locationWeather?.weatherData?.location?.name) {
-      setCity(locationWeather.weatherData.location.name);
-      setTimeout(() => {
-        refetch();
-      }, 100);
+    if (isLocationSuccess && locationWeather?.location.name) {
+      setCity(locationWeather.location.name);
+      setTimeout(() => {refetch()}, 100);
     }
   }, [isLocationSuccess, locationWeather]);
 

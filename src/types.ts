@@ -1,5 +1,8 @@
-export interface GeolocationWeather {
-  weatherData: {
+export interface SearchWeatherInterface {
+weatherData: CurrentWeatherInterface | null;
+}
+
+export interface CurrentWeatherInterface {
     location: {
       name: string;
       country: string;
@@ -11,5 +14,4 @@ export interface GeolocationWeather {
         icon: string;
       };
     };
-  } | null;
 }

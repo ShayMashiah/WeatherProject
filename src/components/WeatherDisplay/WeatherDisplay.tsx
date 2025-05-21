@@ -1,9 +1,9 @@
 import React from "react";
 import { Box, Paper, Typography } from "@mui/material";
 import { displayBoxStyle, iconBoxStyle } from "./styles";
-import type { GeolocationWeather } from "../../types";
+import type { SearchWeatherInterface } from "../../types";
 
-const WeatherDisplay: React.FC<GeolocationWeather> = ({ weatherData }) => {
+const WeatherDisplay: React.FC<SearchWeatherInterface> = ({ weatherData }) => {
   if (!weatherData) return null;
 
   return (
