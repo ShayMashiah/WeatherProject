@@ -1,35 +1,75 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState, useEffect } from "react";
+import { Typography } from "@mui/material";
+import { useQuery } from "@tanstack/react-query";
+import { fetchWeather } from "./weatherApi";
+import { useGeolocationWeather } from "./useGeolocationWeather";
+import { titleStyle } from "./styles";
+import WeatherDisplay from "./components/WeatherDisplay/WeatherDisplay";
+import SearchBar from "./components/SearchBar/SearchBar";
+import HistoryButton from "./components/HistoryButton/HistoryButton";
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [city, setCity] = useState<string>("");
+  const [history, setHistory] = useState<string[]>([]);
+
+  const API_KEY = import.meta.env.VITE_WEATHER_API_KEY;
+
+  const { data: locationWeather, isSuccess: isLocationSuccess } =
+    useGeolocationWeather(API_KEY);
+
+  const { data: weatherData, refetch } = useQuery({
+    queryKey: ["weather", city],
+    queryFn: () => fetchWeather(city, API_KEY),
+    enabled: false,
+  });
+
+  const handleClick = () => {
+    if (city) {
+      setHistory((prevHistory) => {
+        if (!prevHistory.includes(city)) {
+          return [...prevHistory, city];
+        }
+        return prevHistory;
+      });
+      refetch();
+    }
+  };
+
+  useEffect(() => {
+    if (isLocationSuccess && locationWeather?.location.name) {
+      setCity(locationWeather.location.name);
+      setTimeout(() => {
+        refetch();
+      }, 100);
+
+    }
+  }, [isLocationSuccess, locationWeather]);
 
   return (
     <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <Typography variant="h3" align="center" sx={titleStyle}>
+        Weather App
+      </Typography>
+
+      <SearchBar
+        city={city}
+        onCityChange={setCity}
+        onSearchClick={() => {
+          handleClick();
+        }}
+      />
+
+      <HistoryButton
+        history={history}
+        onSelect={(city) => {
+          setCity(city);
+          refetch();
+        }}
+      />
+
+      <WeatherDisplay weatherData={weatherData} />
     </>
-  )
+  );
 }
 
-export default App
+export default App;

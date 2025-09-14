@@ -1,0 +1,1 @@
+export const inputCityPlaceholder = "Search for a city...";
